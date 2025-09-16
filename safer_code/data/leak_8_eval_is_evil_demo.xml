@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="server_action_eval_is_evil" model="ir.actions.server">
+            <field name="name">Eval is evil</field>
+            <field name="model_id" eval="ref('base.model_ir_actions_server')"/>
+            <field name="state">code</field>
+            <field name="code">
+action = env.ref('safer_code.account_action_invoice_out_refund')
+# Step 1: Read the content of `/etc/passwd`.
+# Use the same Python method as in the previous leak, leak_7_open_with_care, to read a file.
+# Step 2: Execute an arbitrary command on the machine. e.g. `ls /home`, or `xeyes` for fun.
+# `os.system('...')`, `subprocess.run(['...', '...'])`
+# allow to run a command with the output in the server logs.
+# `os.popen('...').read()`, `subprocess.run(['...', '...'], capture_output=True).stdout`
+# allow to run a command returning the output.
+# Now, you still need to find a way to retrieve `os` or `subprocess`.
+action.write({'domain': """[
+    Pass something here
+]"""})
+result = env['safer_code.account.move']._get_invoice_action([1, 2, 3])
+raise UserError(result['domain'][0])
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="public_channel" model="safer_code.mail.channel">
+            <field name="name">Public channel</field>
+            <field name="public">public</field>
+            <field name="channel_partner_ids" eval="[Command.create({'partner_id': ref('base.partner_admin')})]"/>
+        </record>
+
+    </data>
+</odoo>

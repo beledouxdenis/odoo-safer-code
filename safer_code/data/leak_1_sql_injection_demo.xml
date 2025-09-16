@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="blacklisted_email_foo" model="safer_code.blacklist">
+            <field name="email">foo@bar.com</field>
+        </record>
+
+        <record id="blacklisted_email_bar" model="safer_code.blacklist">
+            <field name="email">bar@foo.com</field>
+        </record>
+
+        <record id="move_foo" model="safer_code.account.move">
+            <field name="name">foo</field>
+            <field name="line_ids" eval="[(0, 0, {}), (0, 0, {}), (0, 0, {})]"/>
+        </record>
+
+    </data>
+</odoo>

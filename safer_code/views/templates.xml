@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="me">
+        <t t-call="portal.frontend_layout">
+            <div class="container">
+                <form action="/me" method="post">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="mb-3 col-xl-6">
+                                    <label class="col-form-label" for="email">Email</label>
+                                    <input type="email" name="email" class="form-control" t-att-value="email or partner.email" />
+                                </div>
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            </div>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+    <template id="set_company_name">
+        <t t-call="website.layout">
+            <div class="container">
+                <form action="/safer_code/set-company-name" method="post">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div t-if="renamed" class="row">
+                                <div class="mt-3 col-xl-6 alert alert-success">
+                                    The company has been succesfully renamed.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-xl-6">
+                                    <label class="col-form-label" for="name">Company name</label>
+                                    <input type="name" name="name" class="form-control" t-att-value="name" />
+                                </div>
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            </div>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

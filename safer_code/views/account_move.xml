@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_action_invoice_out_refund" model="ir.actions.act_window">
+            <field name="name">Credit Notes</field>
+            <field name="res_model">safer_code.account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('type','=','out_refund')]</field>
+        </record>
+
+    </data>
+</odoo>

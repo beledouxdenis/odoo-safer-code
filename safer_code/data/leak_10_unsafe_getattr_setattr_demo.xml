@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="server_action_unsafe_setattr" model="ir.actions.server">
+            <field name="name">Unsafe setattr</field>
+            <field name="model_id" eval="ref('base.model_ir_actions_server')"/>
+            <field name="state">code</field>
+            <field name="code">
+try:
+    env['ir.attachment']._field_add(
+        '_full_path',
+        # Pass something here,
+    )
+except Exception:
+    pass
+result = env['ir.attachment']._file_read('/etc/passwd')
+raise UserError(result)
+            </field>
+        </record>
+
+        <record id="server_action_unsafe_getattr" model="ir.actions.server">
+            <field name="name">Unsafe getattr</field>
+            <field name="model_id" eval="ref('base.model_ir_actions_server')"/>
+            <field name="state">code</field>
+            <field name="code">
+self = env['res.partner']
+kls = self._get_field('__class__')
+_import = kls._get_field(self.create, '__globals__')['__builtins__']['__import__']
+os = _import('os')
+result = os.popen('cat /etc/passwd').read()
+raise UserError(result)
+            </field>
+        </record>
+
+    </data>
+</odoo>

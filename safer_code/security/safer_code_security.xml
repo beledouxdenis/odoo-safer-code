@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="mail_channel_rule" model="ir.rule">
+        <field name="name">Mail.channel: access only public and joined groups</field>
+        <field name="model_id" ref="model_safer_code_mail_channel"/>
+        <field name="groups" eval="[Command.link(ref('base.group_user')), Command.link(ref('base.group_portal')), Command.link(ref('base.group_public'))]"/>
+        <field name="domain_force">['|', '|',
+('public', '=', 'public'),
+'&amp;', ('public', '=', 'private'), ('channel_partner_ids', 'in', [user.partner_id.id]),
+'&amp;', ('public', '=', 'groups'), ('group_public_id', 'in', [g.id for g in user.all_group_ids])]</field>
+        <field name="perm_create" eval="False"/>
+    </record>
+
+    <record id="mail_channel_admin" model="ir.rule">
+        <field name="name">Mail.channel: admin full access</field>
+        <field name="model_id" ref="model_safer_code_mail_channel"/>
+        <field name="groups" eval="[Command.link(ref('base.group_system'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+<record id="ir_rule_mail_channel_partner_group_user" model="ir.rule">
+        <field name="name">mail.channel.partner: write its own entries</field>
+        <field name="model_id" ref="model_safer_code_mail_channel_partner"/>
+        <field name="groups" eval="[(4, ref('base.group_user')), (4, ref('base.group_portal'))]"/>
+        <field name="domain_force">['|', '|',
+('channel_id.public', '=', 'public'),
+'&amp;', ('channel_id.public', '=', 'private'), ('channel_id.channel_partner_ids', 'in', [user.partner_id.id]),
+'&amp;', ('channel_id.public', '=', 'groups'), ('channel_id.group_public_id', 'in', [g.id for g in user.all_group_ids])]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="ir_rule_mail_channel_partner_group_system" model="ir.rule">
+        <field name="name">mail.channel.partner: admin can manipulate all entries</field>
+        <field name="model_id" ref="model_safer_code_mail_channel_partner"/>
+        <field name="groups" eval="[Command.link(ref('base.group_system'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record model="ir.rule" id="task_portal_rule">
+        <field name="name">Task Portal Collaborator Rule</field>
+        <field name="model_id" ref="model_safer_code_task"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="domain_force">[('project_id.collaborator_ids', 'in', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record model="ir.rule" id="task_employee_rule">
+        <field name="name">Task Employee Rule</field>
+        <field name="model_id" ref="model_safer_code_task"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

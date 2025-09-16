@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="server_action_open_with_care" model="ir.actions.server">
+            <field name="name">Open with care</field>
+            <field name="model_id" eval="ref('base.model_ir_actions_server')"/>
+            <field name="state">code</field>
+            <field name="code">
+# Exploit the vulnerability to read the file `/etc/passwd`
+bundle = env['safer_code.ir.qweb'].get_asset_bundle(None, [
+    {'atype': 'text/css', } # Fill the missing keys/values to exploit the vulnerability
+])
+asset = bundle.stylesheets[0]
+raise UserError(asset._fetch_content())
+            </field>
+        </record>
+
+    </data>
+</odoo>

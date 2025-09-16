@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="js_class">res_partner_form</attribute>
+                </form>
+                <field name="phone" position="after">
+                    <a href="#" class="o_safer_code_give_a_call">
+                        <i class="fa fa-phone fa-fw text-muted"/>Give a call
+                    </a>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

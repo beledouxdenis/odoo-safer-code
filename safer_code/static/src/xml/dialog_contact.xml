@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="safer_code.contact_dialog">
+        <Dialog size="'md'">
+            <div role="alert">
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="close">Call</button>
+                <button class="btn btn-secondary" t-on-click="close">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

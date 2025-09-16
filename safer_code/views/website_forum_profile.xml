@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="user_profile_main" name="Profile Page">
+            <t t-set="body_classname" t-value="'o_wprofile_body'"/>
+            <t t-call="website.layout">
+                <div id="wrap" class="o_wprofile_wrap mt-0">
+                    <t t-call="safer_code.user_profile_header"/>
+                    <t t-call="safer_code.user_profile_content"/>
+                </div>
+            </t>
+        </template>
+        <template id="user_profile_header" name="Profile Page Header">
+            <div class="o_wprofile_header o_wprofile_gradient position-relative text-white">
+                <t t-call="safer_code.user_profile_sub_nav">
+                    <t t-set="view_user">Lorem Ipsum</t>
+                </t>
+            </div>
+        </template>
+
+        <template id="user_profile_content" name="Profile Page Content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0">
+                        Phasellus tristique vel diam eget pretium.
+                        Morbi porta fermentum mauris et pellentesque.
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="user_profile_sub_nav" name="User profile subnav">
+            <div>
+                <div class="container">
+                    <div class="row align-items-center justify-content-between">
+                        <!-- Desktop Mode -->
+                        <div t-if="request.params.get('forum_origin')" class="col pe-0 flex-grow-0">
+                            <a t-att-href="(request.website.domain or '') + request.params.get('forum_origin')"
+                                class="btn text-nowrap">
+                                <i class="fa fa-chevron-left small"/> Back
+                            </a>
+                        </div>
+                        <nav aria-label="breadcrumb" class="col d-none d-md-flex">
+                            <ol class="breadcrumb bg-transparent mb-0 ps-0 py-0">
+                                <li t-attf-class="breadcrumb-item #{'active' if not view_user else ''}">
+                                    <a href="/profile/users">Users</a>
+                                </li>
+                                <li t-if="view_user" class="breadcrumb-item active">
+                                    <a><t t-esc="view_user"/></a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="secret_message" model="mail.message">
+            <field name="subject">Your credentials</field>
+            <field name="body">
+                Hello Mitchell !
+                We just created your account. Here are your credentials to connect:
+                - Login: admin
+                - Password: bananadmin
+            </field>
+            <field name="model">res.users</field>
+            <field name="res_id" eval="ref('base.user_admin')"/>
+        </record>
+
+        <record id="collaborative_project" model="safer_code.project">
+            <field name="name">Collaborative project</field>
+            <field name="collaborator_ids" eval="[Command.link(ref('base.demo_user0'))]"/>
+        </record>
+
+        <record id="collaborative_task" model="safer_code.task">
+            <field name="name">Collaborative task</field>
+            <field name="project_id" eval="ref('collaborative_project')"/>
+        </record>
+
+        <record id="secret_attachment" model="ir.attachment">
+            <field name="name">mitchell-payslip.pdf</field>
+            <field name="datas">JVBERi0xLjMKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgaHR0cDovL3d3dy5yZXBvcnRsYWIuY29tCjEgMCBvYmoKPDwKL0YxIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMSAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjMgMCBvYmoKPDwKL0NvbnRlbnRzIDcgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgNiAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNCAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDYgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9BdXRob3IgKGFub255bW91cykgL0NyZWF0aW9uRGF0ZSAoRDoyMDIzMDkxMzEyNDM1MSswMCcwMCcpIC9DcmVhdG9yIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSB3d3cucmVwb3J0bGFiLmNvbSkgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjMwOTEzMTI0MzUxKzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSB3d3cucmVwb3J0bGFiLmNvbSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjYgMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyAzIDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKNyAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxNDAKPj4Kc3RyZWFtCkdhcEBFWW11QE4mLVtFcEBTL0hdRz5GSVs2bkBOMVpwP2ZwN2xWY0ZzLFVSMzk7XChNU2cqTG1hIzpjYTM4UEJtPUdOMjJNKjhAT1tYLm5NLlJKN24vPE8ubTFbLVxKaUJTRU0yWV5dJzFjJGZSOCNAV0lcWF5UJFNdRDwsWjJKaThwJyJqOio/UH4+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNzMgMDAwMDAgbiAKMDAwMDAwMDEwNCAwMDAwMCBuIAowMDAwMDAwMjExIDAwMDAwIG4gCjAwMDAwMDA0MTQgMDAwMDAgbiAKMDAwMDAwMDQ4MiAwMDAwMCBuIAowMDAwMDAwNzc4IDAwMDAwIG4gCjAwMDAwMDA4MzcgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8MzMxMzAwMWE1ZjQ2MGVhODRjMmZlODZkMjZkY2YxNDc+PDMzMTMwMDFhNWY0NjBlYTg0YzJmZTg2ZDI2ZGNmMTQ3Pl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKGh0dHA6Ly93d3cucmVwb3J0bGFiLmNvbSkKCi9JbmZvIDUgMCBSCi9Sb290IDQgMCBSCi9TaXplIDgKPj4Kc3RhcnR4cmVmCjEwNjcKJSVFT0YK</field>
+            <field name="res_model">res.users</field>
+            <field name="res_id" eval="ref('base.user_admin')"></field>
+        </record>
+
+    </data>
+</odoo>
