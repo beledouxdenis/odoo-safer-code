@@ -133,7 +133,7 @@ class Exploiter:
                     # Step 1. Try to inject a SELECT.
                     # The code will raise an exception, but you can get sensitive information in the traceback
                     # Step 2. Try to inject an INSERT or UPDATE
-                    # e.g in the table `INSERT INTO safer_code(value) VALUES('my tri/quadri-gram')`
+                    # e.g in the table `INSERT INTO safer_code(value) VALUES('my name')`
                 ]
             },
         )
