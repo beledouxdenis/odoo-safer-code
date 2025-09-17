@@ -130,9 +130,8 @@ class Exploiter:
             context={
                 "matching_amount_aml_ids": [
                     # Pass something here to inject SQL
-                    # Step 1. Try to inject a SELECT.
-                    # The code will raise an exception, but you can get sensitive information in the traceback
-                    # Step 2. Try to inject an INSERT or UPDATE
+                    # SELECT won't work, it will raise an exception.
+                    # But try to inject an INSERT or UPDATE
                     # e.g in the table `INSERT INTO safer_code(value) VALUES('my name')`
                 ]
             },

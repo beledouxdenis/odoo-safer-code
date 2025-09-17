@@ -2,7 +2,6 @@
 
 {
     'name': 'Safer Code',
-    'version': '1.0',
     'category': 'Hidden',
     'summary': 'Actual examples how hackers broke Odoo\'s security.',
     'description': """
