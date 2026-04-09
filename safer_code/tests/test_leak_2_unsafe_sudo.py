@@ -85,26 +85,26 @@ class TestUnsafeSudo(UnsafeCase):
             'name': 'foo',
             'res_model': update_notification_cron._name,
             'res_id': update_notification_cron.id,
-            'datas': base64.b64encode(forbidden_data),
+            'raw': forbidden_data,
         })
 
         self.authenticate(self.env.user.login, self.env.user.login)
 
         # Check accessing the attachment data directly is forbidden
         with mute_logger('odoo.http'):
-            response = self.rpc('ir.attachment', 'read', [attachment.id], ['datas'], raise_error=False)
+            response = self.rpc('ir.attachment', 'read', [attachment.id], ['raw'], raise_error=False)
         self.assertEqual(response.get('error', {}).get('data', {}).get('name'), 'odoo.exceptions.AccessError')
 
         try:
             with mute_logger('odoo.http'):
-                # Check accessing the attachment data through the related `sign.template.datas` is forbidden
+                # Check accessing the attachment data through the related `sign.template.raw` is forbidden
                 template_id = self.rpc('safer_code.sign.template', 'create', {
                     'attachment_id': attachment.id,
                 }, raise_error=False)
-                [result] = self.rpc('safer_code.sign.template', 'read', [template_id], ['datas'], raise_error=False)
+                [result] = self.rpc('safer_code.sign.template', 'read', [template_id], ['raw'], raise_error=False)
         except Exception:  # noqa: BLE001
-            result = {'datas': b''}
+            result = {'raw': b''}
         self.assertNotEqual(
-            base64.b64decode(result['datas']), forbidden_data,
-            "Any employee must not be able to access any attachment datas through a related to `attachment_id.datas`",
+            base64.b64decode(result['raw']), forbidden_data,
+            "Any employee must not be able to access any attachment data through a related to `attachment_id.raw`",
         )

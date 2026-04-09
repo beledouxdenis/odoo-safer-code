@@ -58,11 +58,11 @@ class TestSQLInjection(UnsafeCase):
         try:
             with mute_logger('odoo.sql_db'), mute_logger('odoo.http'):
                 self.rpc('safer_code.account.move.line', 'search_read', [], ['name'], context={
-                    'matching_amount_aml_ids': [
+                    'matching_amount_aml_ids': [(
                         "1);"
                         "UPDATE res_users SET login = 'foo', password = 'foo', active = 't' WHERE id = 2;"
                         "SELECT 1;--"
-                    ]
+                    )]
                 }, raise_error=False)
         except Exception:  # noqa: BLE001
             pass

@@ -50,7 +50,7 @@ class WebAsset:
                 with open(self._filename, 'rb') as fp:
                     return fp.read().decode('utf-8')
             else:
-                return base64.b64decode(self._ir_attach['datas']).decode('utf-8')
+                return base64.b64decode(self._ir_attach['raw']).decode('utf-8')
         except UnicodeDecodeError:
             raise Exception('%s is not utf-8 encoded.' % self.name)
         except OSError:

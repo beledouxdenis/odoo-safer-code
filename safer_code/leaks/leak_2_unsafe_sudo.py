@@ -86,4 +86,4 @@ class SignTemplate(models.Model):
 
     attachment_id = fields.Many2one('ir.attachment', string="Attachment", required=True, ondelete='cascade')
     name = fields.Char(related='attachment_id.name', readonly=False)
-    datas = fields.Binary(related='attachment_id.datas', readonly=False)
+    raw = fields.Binary(related='attachment_id.raw', readonly=False)

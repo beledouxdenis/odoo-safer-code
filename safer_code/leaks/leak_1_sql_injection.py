@@ -41,8 +41,9 @@ class AccountMove(models.Model):
         if preferred_aml_ids and fields and not order:
             query = super()._search(domain, offset=offset, limit=limit, order=order or self._order)
             placeholder_ids = ', '.join(str(x) for x in preferred_aml_ids)
-            query.order = f""" "safer_code_account_move_line".id IN ({placeholder_ids}) DESC,{query.order.code}"""
-            records = self.browse(query)
+            order_origin = self.env.cr.mogrify(query.order).decode()
+            query.order = f""" "safer_code_account_move_line".id IN ({placeholder_ids}) DESC,{order_origin}"""
+            records = self._fetch_query(query, [])
 
             # Note: copy pasted from models.search_read
             result = []
