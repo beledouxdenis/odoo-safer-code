@@ -4,12 +4,12 @@ from odoo import api, models
 
 
 class Base(models.AbstractModel):
-    _inherit = 'base'
+    _inherit = "base"
 
     # https://github.com/odoo/odoo/blob/9ee022362a098359c78fd1cdb53287dab4d5b298/odoo/models.py#L548-L557
     @api.model
     def _field_add(self, name, field):
-        """ Add the given ``field`` under the given ``name`` in the class """
+        """Add the given ``field`` under the given ``name`` in the class"""
         cls = type(self)
         # add field as an attribute and in cls._fields (for reflection)
         setattr(cls, name, field)
@@ -37,9 +37,9 @@ class BrowsableObject:
 
 
 class HrPayslip(models.Model):
-    _inherit = 'safer_code.hr.payslip'
+    _inherit = "safer_code.hr.payslip"
 
     def _get_localdict(self):
         return {
-            'categories': BrowsableObject({}),
+            "categories": BrowsableObject({}),
         }

@@ -6,13 +6,13 @@ from .common import UnsafeCase
 
 
 class TestDangerousObjects(UnsafeCase):
-
     def test_unsafe_x509_certificate(self):
-        server_action = self.env['ir.actions.server'].create({
-            'name': 'foo',
-            'model_id': self.env.ref('base.model_ir_actions_server').id,
-            'state': 'code',
-            'code': """
+        server_action = self.env["ir.actions.server"].create(
+            {
+                "name": "foo",
+                "model_id": self.env.ref("base.model_ir_actions_server").id,
+                "state": "code",
+                "code": """
 # Set fake certificate and key
 env.user.company_id.write({
     'l10n_xx_reports_sbr_cert': b'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURJekNDQWd1Z0F3SUJBZ0lVSFhYajNRV2JiZ3VWRE5xdnJuTjZLS3NwZzhFd0RRWUpLb1pJaHZjTkFRRUYKQlFBd0lURUxNQWtHQTFVRUJoTUNWazR4RWpBUUJnTlZCQU1NQ1NvdWRHVnpkQzUyYmpBZUZ3MHlNekEzTURjeApORFEyTlRGYUZ3MHpNekEzTURReE5EUTJOVEZhTUNFeEN6QUpCZ05WQkFZVEFsWk9NUkl3RUFZRFZRUUREQWtxCkxuUmxjM1F1ZG00d2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNoejUyeUhUZS8KSHdEUmNIbzNwb3lkd1hhSDZrc0pHSE5PZXNIbzBVTkJSTXkvYUVrd25XOW95c291dVhqVDJDT3BxTGNpS3ZGRgo3WUp6VW91TTJkb3VIeXdPcVNUYWNxNUc4QlM0c09pcUhMa0pXRHUzdUtnMld4WDU4cW5PSHg3YTIydTdGMzFCCnhKU2VoVmRUQVdkMzgySkE2elJBbEtqMU1mSGFsZDVrYndlckVtMzZFWndMemQ2VTNpeHQyRTFxVEw3VENmdDcKbXE4MEVwSGZaY0lMMGppUS9ZVEM3YTYzWldESmZkY3hzTmxQTmVlN0hjcUcvZTl1T1VCOVlmQVpiSXNTMUNpNwpSaFlPSHlNTWdqQ2YzczhFUjNoNGlrRzh5dGx2OFovNWVtY00vdVNLRFVjY1VmWUoyUTZvSEtwcEp2ejJSZFprClNhS20wVS9sYnpHdEFnTUJBQUdqVXpCUk1CMEdBMVVkRGdRV0JCU05jV3AyQ3Zkdjg3dFNta3VaVGlmTG0yTFMKVnpBZkJnTlZIU01FR0RBV2dCU05jV3AyQ3Zkdjg3dFNta3VaVGlmTG0yTFNWekFQQmdOVkhSTUJBZjhFQlRBRApBUUgvTUEwR0NTcUdTSWIzRFFFQkJRVUFBNElCQVFBSytwTjRXTmx3dlVoUlk0Tk9YOVMxM2QwVTQ0TFk4WTdCCjgyRUVKeXVOSHRqTmFQZHZ4dHNkbmdjTUlBb3VFc0N6T3Ewb2V5bjUrKzViUng3RGk4UEhBWjdPZHNDNFMyUmEKWnBnckxRTzJOdTAxTGROdkJSK3hENXdPMkV6cW1aSFVTekNENnFOY29zMDJyRHJkd2Q5dTNidXJlN09BVWptbgpLbXllbGhGVUM0WDJ0Yi9xY1hmYXRCSEc2YkJRbW45eDhvVHh3T3pZKy9sb01FTVBqSkQwT1Y4VTF2NUtQbkovCnJtNXd0NlRqVk1mWTNCR0ZhMUNvL3EvTXQ0aFhHQjkzWUgwRlQ5TzRWTVdJZElRelFERFU3bExZMVJMdy9LdXAKSFNMRW5rZ0lXN2tsaHMyaHdYc1pWc2ZZZkUrcVJLaDRvSWtCMTZ3cGU5SzVUZVB6eWRBYQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==',
@@ -29,8 +29,9 @@ b = cert._backend._lib.BIO_read(bio, buf, 1024)
 content = cert._backend._ffi.string(buf)
 
 raise UserError(content)
-        """
-        })
+        """,
+            }
+        )
         try:
             server_action.run()
         except UserError as e:

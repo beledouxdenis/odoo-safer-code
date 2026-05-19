@@ -12,8 +12,8 @@ class TestUnsafePickle(UnsafeCase):
 
         # Create a test session
         session_store = SessionStore(config.session_dir)
-        sid = 'foo_12345'
-        session = Session({'login': self.env.user.login}, sid)
+        sid = "foo_12345"
+        session = Session({"login": self.env.user.login}, sid)
         session_store.save(session)
         filename = session_store.get_session_filename(sid)
         # Cleanup: the above steps created a file in the filesystem holding the session.
@@ -34,18 +34,18 @@ class TestUnsafePickle(UnsafeCase):
         # which normally should not be the case. However, as since in previous exploits, this is not impossible.
         # This exploits assumes you managed to find a way to write on your session file,
         # and you manage to write your own pickle content in your session file.
-        with open(filename, 'wb') as f:
+        with open(filename, "wb") as f:
             f.write(content)
 
         session_store.get(sid)
         # Cleanup: the above step, which, during unpickling, copied /etc/passwd to /tmp/foo,
         # we need to remove it after the test
-        self.addCleanup(os.remove, '/tmp/foo')
+        self.addCleanup(os.remove, "/tmp/foo")
 
-        with open('/tmp/foo', 'rb') as f:
+        with open("/tmp/foo", "rb") as f:
             data = f.read()
         self.assertNotIn(
-            b'root',
+            b"root",
             data,
-            'A user on the SAAS must not be able to run arbitrary server commands during unpickling a pickle file',
+            "A user on the SAAS must not be able to run arbitrary server commands during unpickling a pickle file",
         )

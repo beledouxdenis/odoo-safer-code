@@ -8,20 +8,28 @@ class Task(models.Model):
     _description = "Task"
 
     active = fields.Boolean(default=True)
-    project_id = fields.Many2one('safer_code.project', string='Project')
-    name = fields.Char(string='Title', required=True)
-    description = fields.Html(string='Description')
-    partner_id = fields.Many2one('res.partner', string='Customer')
+    project_id = fields.Many2one("safer_code.project", string="Project")
+    name = fields.Char(string="Title", required=True)
+    description = fields.Html(string="Description")
+    partner_id = fields.Many2one("res.partner", string="Customer")
     partner_email = fields.Char(
-        compute='_compute_partner_email', inverse='_inverse_partner_email',
-        string='Email', readonly=False, store=True, copy=False
+        compute="_compute_partner_email",
+        inverse="_inverse_partner_email",
+        string="Email",
+        readonly=False,
+        store=True,
+        copy=False,
     )
     user_ids = fields.Many2many(
-        'res.users', relation='safer_code_task_user_rel', column1='task_id', column2='user_id', string='Assignees',
-        context={'active_test': False}
+        "res.users",
+        relation="safer_code_task_user_rel",
+        column1="task_id",
+        column2="user_id",
+        string="Assignees",
+        context={"active_test": False},
     )
 
-    @api.depends('partner_id.email')
+    @api.depends("partner_id.email")
     def _compute_partner_email(self):
         for task in self:
             if task.partner_id.email != task.partner_email:

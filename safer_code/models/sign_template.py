@@ -7,4 +7,4 @@ class SignTemplate(models.Model):
     _name = "safer_code.sign.template"
     _description = "Signature Template"
 
-    name = fields.Char('Name')
+    name = fields.Char("Name")

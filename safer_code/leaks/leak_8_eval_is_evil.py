@@ -6,12 +6,12 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = 'safer_code.account.move'
+    _inherit = "safer_code.account.move"
 
     def _get_invoice_action(self, invoice_ids):
-        xml_id = 'account_action_invoice_out_refund'
-        result = self.env.ref('safer_code.%s' % (xml_id)).read()[0]
-        invoice_domain = eval(result['domain'])
-        invoice_domain.append(('id', 'in', invoice_ids))
-        result['domain'] = invoice_domain
+        xml_id = "account_action_invoice_out_refund"
+        result = self.env.ref("safer_code.%s" % (xml_id)).read()[0]
+        invoice_domain = eval(result["domain"])
+        invoice_domain.append(("id", "in", invoice_ids))
+        result["domain"] = invoice_domain
         return result

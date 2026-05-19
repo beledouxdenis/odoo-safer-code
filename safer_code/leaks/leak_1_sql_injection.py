@@ -13,12 +13,15 @@ class MailComposer(models.Model):
         odoo-bin -d safer_db --test-tags .test_unsafe_cr_execute
         """
         blacklisted_rec_ids = []
-        blacklist = self.env['safer_code.blacklist'].sudo().search([]).mapped('email')
+        blacklist = self.env["safer_code.blacklist"].sudo().search([]).mapped("email")
         if blacklist:
             email_field = self.env[self.model]._primary_email
-            sql = """ SELECT id from %s WHERE LOWER(%s) = any (array[%s]) AND id in (%s)""" % \
-                (self.env[self.model]._table, email_field, ', '.join("'" + rec + "'" for rec in blacklist),
-                 ', '.join(str(res_id) for res_id in res_ids))
+            sql = """ SELECT id from %s WHERE LOWER(%s) = any (array[%s]) AND id in (%s)""" % (
+                self.env[self.model]._table,
+                email_field,
+                ", ".join("'" + rec + "'" for rec in blacklist),
+                ", ".join(str(res_id) for res_id in res_ids),
+            )
             self.env.cr.execute(sql)
             blacklisted_rec_ids = [rec[0] for rec in self.env.cr.fetchall()]
         return blacklisted_rec_ids
@@ -37,10 +40,10 @@ class AccountMove(models.Model):
         odoo-bin -d safer_db --test-tags .test_unsafe_query_order
         """
         # EXTENDS 'base'
-        preferred_aml_ids = self.env.context.get('matching_amount_aml_ids')
+        preferred_aml_ids = self.env.context.get("matching_amount_aml_ids")
         if preferred_aml_ids and fields and not order:
             query = super()._search(domain, offset=offset, limit=limit, order=order or self._order)
-            placeholder_ids = ', '.join(str(x) for x in preferred_aml_ids)
+            placeholder_ids = ", ".join(str(x) for x in preferred_aml_ids)
             order_origin = self.env.cr.mogrify(query.order).decode()
             query.order = f""" "safer_code_account_move_line".id IN ({placeholder_ids}) DESC,{order_origin}"""
             records = self._fetch_query(query, [])
@@ -54,7 +57,7 @@ class AccountMove(models.Model):
                 return result
 
             # reorder read
-            index = {vals['id']: vals for vals in result}
+            index = {vals["id"]: vals for vals in result}
             return [index[record.id] for record in records if record.id in index]
 
         return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)

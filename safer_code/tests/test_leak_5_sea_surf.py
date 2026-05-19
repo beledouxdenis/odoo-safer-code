@@ -8,10 +8,10 @@ from odoo.tests.common import tagged
 from .common import UnsafeCase
 
 
-@tagged('post_install', '-at_install')
+@tagged("post_install", "-at_install")
 class TestUnsafeSeaSurf(UnsafeCase):
     def test_unsafe_route_get_method(self):
-        self.assertNotEqual(self.env.ref('base.user_admin').company_id.name, 'hacked')
+        self.assertNotEqual(self.env.ref("base.user_admin").company_id.name, "hacked")
 
         html = f"""
             <html>
@@ -22,7 +22,7 @@ class TestUnsafeSeaSurf(UnsafeCase):
                 </body>
             </html>
         """
-        with tempfile.NamedTemporaryFile('w', suffix='.html', encoding='utf-8', delete=False) as f:
+        with tempfile.NamedTemporaryFile("w", suffix=".html", encoding="utf-8", delete=False) as f:
             f.write(html)
 
         self.addCleanup(os.unlink, f.name)
@@ -34,7 +34,7 @@ class TestUnsafeSeaSurf(UnsafeCase):
         )
 
         self.assertNotEqual(
-            self.env.ref('base.user_admin').company_id.name,
-            'hacked',
-            'A CSRF attack must be prevented using the POST method along with a CSRF token.'
+            self.env.ref("base.user_admin").company_id.name,
+            "hacked",
+            "A CSRF attack must be prevented using the POST method along with a CSRF token.",
         )

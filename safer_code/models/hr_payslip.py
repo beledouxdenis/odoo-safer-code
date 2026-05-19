@@ -3,7 +3,7 @@ from odoo import fields, models
 
 
 class HrPaylsip(models.Model):
-    _name = 'safer_code.hr.payslip'
-    _description = 'Pay Slip'
+    _name = "safer_code.hr.payslip"
+    _description = "Pay Slip"
 
-    name = fields.Char(string='Payslip Name', required=True)
+    name = fields.Char(string="Payslip Name", required=True)

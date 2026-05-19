@@ -7,5 +7,5 @@ class Project(models.Model):
     _name = "safer_code.project"
     _description = "Project"
 
-    name = fields.Char(string='Name', required=True)
-    collaborator_ids = fields.Many2many('res.users', string='Collaborators', copy=False)
+    name = fields.Char(string="Name", required=True)
+    collaborator_ids = fields.Many2many("res.users", string="Collaborators", copy=False)
