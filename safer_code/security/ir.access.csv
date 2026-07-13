@@ -1,0 +1,33 @@
+id,name,model_id,group_id/id,operation,domain
+access_mail_channel_all,mail.group.all,safer_code.mail.channel,,r,
+access_mail_channel_user,mail.group.user,safer_code.mail.channel,base.group_user,cru,
+access_mail_channel_admin,mail.group.system,safer_code.mail.channel,base.group_system,crud,
+access_mail_channel_partner_public,mail.channel.partner.public,safer_code.mail.channel.partner,base.group_public,r,
+access_mail_channel_partner_portal,mail.channel.partner.portal,safer_code.mail.channel.partner,base.group_portal,crud,
+access_mail_channel_partner_user,mail.channel.partner.user,safer_code.mail.channel.partner,base.group_user,crud,
+access_safer_code_account_move_employee,access_safer_code_account_move_employee,safer_code.account.move,base.group_user,crud,
+access_safer_code_account_move_portal,access_safer_code_account_move_portal,safer_code.account.move,base.group_portal,r,
+access_safer_code_account_move_line_employee,access_safer_code_account_move_line_employee,safer_code.account.move.line,base.group_user,crud,
+access_safer_code_account_move_line_portal,access_safer_code_account_move_line_portal,safer_code.account.move.line,base.group_portal,r,
+access_safer_code_blacklist,access_safer_code_blacklist,safer_code.blacklist,base.group_system,crud,
+access_safer_code_compose_message_employee,access_safer_code_compose_message_employee,safer_code.compose.message,base.group_user,cru,
+access_safer_code_compose_message_portal,access_safer_code_compose_message_portal,safer_code.compose.message,base.group_portal,cru,
+access_safer_code_project_admin,access_safer_code_project_admin,safer_code.project,base.group_erp_manager,crud,
+access_safer_code_sign_template_employee,access_safer_code_sign_template_employee,safer_code.sign.template,base.group_user,crud,
+access_safer_code_task_portal,access_safer_code_task_portal,safer_code.task,base.group_portal,ru,"[('project_id.collaborator_ids', 'in', user.id)]"
+access_safer_code_task_employee,access_safer_code_task_employee,safer_code.task,base.group_user,crud,"[(1, '=', 1)]"
+access_safer_code_hr_payslip_admin,access_safer_code_hr_payslip_admin,safer_code.hr.payslip,base.group_erp_manager,crud,
+access_safer_code_payment_acquirer_read_group_public,access_safer_code_payment_acquirer_read_group_public,safer_code.payment.acquirer,base.group_public,r,
+access_safer_code_payment_acquirer_read_group_portal,access_safer_code_payment_acquirer_read_group_portal,safer_code.payment.acquirer,base.group_portal,r,
+access_safer_code_payment_acquirer_read_group_user,access_safer_code_payment_acquirer_read_group_user,safer_code.payment.acquirer,base.group_user,r,
+access_safer_code_payment_acquirer_employee,access_safer_code_payment_acquirer_employee,safer_code.payment.acquirer,base.group_user,cru,
+access_safer_code_payment_acquirer_admin,access_safer_code_payment_acquirer_admin,safer_code.payment.acquirer,base.group_system,crud,
+
+mail_channel_rule_group_user,"Mail.channel: access only public and joined groups",safer_code.mail.channel,base.group_user,rud,"['|', '|', ('public', '=', 'public'), '&', ('public', '=', 'private'), ('channel_partner_ids', 'in', [user.partner_id.id]), '&', ('public', '=', 'groups'), ('group_public_id', 'in', [g.id for g in user.all_group_ids])]"
+mail_channel_rule_group_portal,"Mail.channel: access only public and joined groups",safer_code.mail.channel,base.group_portal,rud,"['|', '|', ('public', '=', 'public'), '&', ('public', '=', 'private'), ('channel_partner_ids', 'in', [user.partner_id.id]), '&', ('public', '=', 'groups'), ('group_public_id', 'in', [g.id for g in user.all_group_ids])]"
+mail_channel_rule_group_public,"Mail.channel: access only public and joined groups",safer_code.mail.channel,base.group_public,rud,"['|', '|', ('public', '=', 'public'), '&', ('public', '=', 'private'), ('channel_partner_ids', 'in', [user.partner_id.id]), '&', ('public', '=', 'groups'), ('group_public_id', 'in', [g.id for g in user.all_group_ids])]"
+mail_channel_admin,"Mail.channel: admin full access",safer_code.mail.channel,base.group_system,crud,"[(1, '=', 1)]"
+
+ir_rule_mail_channel_partner_group_user,"mail.channel.partner: write its own entries",safer_code.mail.channel.partner,base.group_user,ud,"['|', '|', ('channel_id.public', '=', 'public'), '&', ('channel_id.public', '=', 'private'), ('channel_id.channel_partner_ids', 'in', [user.partner_id.id]), '&', ('channel_id.public', '=', 'groups'), ('channel_id.group_public_id', 'in', [g.id for g in user.all_group_ids])]"
+ir_rule_mail_channel_partner_group_portal,"mail.channel.partner: write its own entries",safer_code.mail.channel.partner,base.group_portal,ud,"['|', '|', ('channel_id.public', '=', 'public'), '&', ('channel_id.public', '=', 'private'), ('channel_id.channel_partner_ids', 'in', [user.partner_id.id]), '&', ('channel_id.public', '=', 'groups'), ('channel_id.group_public_id', 'in', [g.id for g in user.all_group_ids])]"
+ir_rule_mail_channel_partner_group_system,"mail.channel.partner: admin can manipulate all entries",safer_code.mail.channel.partner,base.group_system,crud,"[(1, '=', 1)]"

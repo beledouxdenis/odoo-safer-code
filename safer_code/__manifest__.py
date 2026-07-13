@@ -13,8 +13,7 @@ to obtain data or access they were not supposed to.
         "website",
     ],
     "data": [
-        "security/ir.model.access.csv",
-        "security/safer_code_security.xml",
+        "security/ir.access.csv",
         "views/account_move.xml",
         "views/res_partner_views.xml",
         "views/templates.xml",

@@ -34,7 +34,7 @@
                     <div class="row align-items-center justify-content-between">
                         <!-- Desktop Mode -->
                         <div t-if="request.params.get('forum_origin')" class="col pe-0 flex-grow-0">
-                            <a t-att-href="(request.website.domain or '') + request.params.get('forum_origin')"
+                            <a t-att-href="(website.domain or '') + request.params.get('forum_origin')"
                                 class="btn text-nowrap">
                                 <i class="fa fa-chevron-left small"/> Back
                             </a>

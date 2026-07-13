@@ -2,6 +2,7 @@ from . import account_move
 from . import account_move_line
 from . import blacklist
 from . import compose_message
+from . import evaluation
 from . import hr_payslip
 from . import mail_channel
 from . import mail_channel_partner
